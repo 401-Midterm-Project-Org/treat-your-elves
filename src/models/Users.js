@@ -23,12 +23,17 @@ const userModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-
+    
     token: {
       type: DataTypes.VIRTUAL,
       get() {
         return jwt.sign({ username: this.username }, SECRET)
-      }
+     },
+
+    groups:{
+      type: DataTypes.ARRAY(DataTypes.TEXT),
+      allowNull: true
+
     }
 
   })
