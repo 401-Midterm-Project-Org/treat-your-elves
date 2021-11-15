@@ -5,7 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 const signUp = require('./routes/sign-up.js');
-const authRouter = require('./routes/sign-up');
+const signIn = require('./routes/sign-in.js')
 const app = express();
 
 const groupsRoute = require('./routes/groups.js');
@@ -16,7 +16,9 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use(authRouter)
+app.use(signUp);
+app.use(signIn);
+
 app.use(groupsRoute);
 
 module.exports = {

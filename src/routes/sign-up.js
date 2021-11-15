@@ -14,6 +14,7 @@ authRouter.post('/signup', async (request, response, next) => {
 
     const output = {
       user: userRecord,
+      token: userRecord.token,
     };
 
     response.status(201).json(output);
