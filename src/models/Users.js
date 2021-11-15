@@ -17,6 +17,11 @@ const userModel = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+
+    groups:{
+      type: DataTypes.ARRAY(DataTypes.TEXT),
+      allowNull: true
     }
 
   })
