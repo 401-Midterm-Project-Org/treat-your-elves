@@ -1,0 +1,14 @@
+'use strict';
+
+const { Sequelize, DataTypes } = require('sequelize')
+
+const userModel = require('./Users.js');
+
+const DATABASE_URL = 'sqlite:memory:';
+
+const sequelize = new Sequelize(DATABASE_URL)
+
+module.exports = {
+  db:sequelize,
+  users: userModel(sequelize, DataTypes)
+};
