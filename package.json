@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/401-Midterm-Project-Org/treat-your-elves#readme",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jest": "^27.3.1",
     "mongodb": "^4.1.4",
