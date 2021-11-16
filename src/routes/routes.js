@@ -18,10 +18,10 @@ router.param('model', (request, response, next) => {
 })
 
 router.post('/api/:model', handleCreate);
-router.get('/api/:/model', handleGetAll);
+router.get('/api/:model', handleGetAll);
 router.get('/api/:model/:id', handleGetOne);
-router.put('/:model/:id', handleUpdate);
-router.delete('/:model/:id', handleDelete);
+router.put('/api/:model/:id', handleUpdate);
+router.delete('/api/:model/:id', handleDelete);
 
 
 async function handleCreate(request, response, next) {
@@ -35,28 +35,76 @@ async function handleCreate(request, response, next) {
 
     response.status(201).json(output);
   } catch (error) {
-    next.apply(error.message)
+    response.status(400);
+    console.log(error);
   }
 
 };
 
-async function handleGetAll(request, response, next) {
+async function handleGetAll(req, res, next) {
 
   try {
-    let allGroups = await request.model.findAll({});
-    response.status(200).json(allGroups);
+    let allGroups = await req.model.findAll({});
+    res.status(200).json(allGroups);
   } catch (error) {
-    next.apply(error.message);
+    res.status(400);
+    console.log(error);
   }
 
 };
 
-// async function handleGetOne(req, res) {
+async function handleGetOne(req, res, next) {
 
-//   const id = req.params.id;
-//   let theRecord = await req.model.findOne({ id });
-//   res.status(200).json(theRecord);
+  try{
+    const id = req.params.id;
+    let theRecord = await req.model.findOne({where: { id }});
+    res.status(200).json(theRecord);
+  }catch (error){
+    res.status(400);
+    console.log(error);
+  }
 
-// }
+}
+
+async function handleGetOne(req, res, next) {
+
+  try{
+    const id = req.params.id;
+    let theRecord = await req.model.findOne({where: { id }});
+    res.status(200).json(theRecord);
+  }catch (error){
+    res.status(400);
+    console.log(error);
+  }
+
+}
+
+async function handleUpdate(req, res, next) {
+
+  try{
+    const id = req.params.id;
+    const newItem = req.body;
+    let theRecord = await req.model.findOne({where: { id }}).then(record => record.update(newItem));
+    res.status(200).json(theRecord);
+  }catch (error){
+    res.status(400);
+    console.log(error);
+  }
+
+}
+
+async function handleDelete(req, res, next) {
+
+  try{
+    const id = req.params.id;
+    await req.model.destroy({where: { id }});
+    res.status(200).send('deleted!');
+  }catch (error){
+    res.status(400);
+    console.log(error);
+  }
+
+}
+
 
 module.exports = router;
