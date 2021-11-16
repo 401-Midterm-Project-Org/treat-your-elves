@@ -1,21 +1,21 @@
 'use strict';
 
-const listItemModel = (sequelize, DataTypes) => {
+const wishListItemModel = (sequelize, DataTypes) => {
 
   const model = sequelize.define('ListItem', {
 
-    name: { 
+    itemName: { 
       type: DataTypes.STRING, 
       allowNull: false
     },
 
-    fullfilled: {
-      type: DataTypes.BOOLEAN, 
-      allowNull: true
+    associationsID: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
 
   })
   return model;
 }
 
-module.exports = listItemModel;
+module.exports = wishListItemModel;
