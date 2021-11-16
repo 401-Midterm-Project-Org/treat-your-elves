@@ -22,6 +22,8 @@ const userGroupAssociationsModel = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     }
+    
+    //TODO: associate secret santa to user, may start as null
 
   })
 
