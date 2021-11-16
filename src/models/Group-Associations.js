@@ -1,6 +1,6 @@
 'use strict';
 
-const groupAssociationsModel = (sequelize, DataTypes) => {
+const userGroupAssociationsModel = (sequelize, DataTypes) => {
   const model = sequelize.define('GroupAssociations', {
 
     groupId: {
@@ -17,10 +17,10 @@ const groupAssociationsModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     }
-    
+
   })
 
   return model;
 }
 
-module.exports = groupAssociationsModel;
+module.exports = userGroupAssociationsModel;
