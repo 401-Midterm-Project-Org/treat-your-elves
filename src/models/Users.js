@@ -34,10 +34,8 @@ const userModel = (sequelize, DataTypes) => {
     groups:{
       type: DataTypes.ARRAY(DataTypes.TEXT),
       allowNull: true
-
-    }
-
-  })
+    },
+  });
 
   model.beforeCreate(async (user) => {
     user.password = await bcrypt.hash(user.password, 10);
@@ -59,7 +57,10 @@ const userModel = (sequelize, DataTypes) => {
       return new Error('User not found.');
     }
   };
+
   return model;
 }
+
+
 
 module.exports = userModel;

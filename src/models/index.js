@@ -9,7 +9,7 @@ const listItemModel = require('./List-Item.js');
 
 const DATABASE_URL = 'sqlite:memory:';
 
-const sequelize = new Sequelize(DATABASE_URL)
+const sequelize = new Sequelize(DATABASE_URL);
 
 // instantiate our DB with our models
 const groups = groupModel(sequelize, DataTypes);
