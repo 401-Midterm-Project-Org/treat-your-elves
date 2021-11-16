@@ -16,6 +16,11 @@ const userGroupAssociationsModel = (sequelize, DataTypes) => {
     userRole: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+
+    wishListId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
 
   })

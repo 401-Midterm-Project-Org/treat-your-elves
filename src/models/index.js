@@ -31,9 +31,9 @@ associations.belongsTo(users, { foreignKey: 'userId', targetKey: 'id' })
 groups.hasMany(associations, { foreignKey: 'groupId', sourceKey: 'id' });
 associations.belongsTo(groups, { foreignKey: 'groupId', targetKey: 'id' })
 
-// TODO: connecting wishlist to user
-users.hasMany(wishList, { foreignKey: 'wishListId', sourceKey: 'id' });
-wishList.belongsTo(users, { foreignKey: 'wishListId', targetKey: 'id' });
+// DONE: connecting wishlist to user
+wishList.hasOne(associations, { foreignKey: 'wishListId', sourceKey: 'id' });
+associations.belongsTo(wishList, { foreignKey: 'wishListId', targetKey: 'id' });
 
 // TODO: connecting list item to wishlist
 wishList.hasMany(listItem, { foreignKey: 'listId', sourceKey: 'id' });
