@@ -9,8 +9,8 @@ const groupModel = (sequelize, DataTypes) => {
       unique: true
     },
 
-    groupOwner: {
-      type: DataTypes.STRING,
+    groupAdminId: {
+      type: DataTypes.INTEGER,
       allowNull: false
     }
   })
