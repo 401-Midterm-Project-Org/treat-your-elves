@@ -69,6 +69,28 @@ describe('Testing requests to /api/groups route', () => {
     expect(groups[0].id).toBe(1)
     expect(groups[0].groupName).toBe('updated name 1')
 
+  });
+
+
+  it('Should find one groups when get request is made to /api/groups/:id', async () => {
+
+    let response = await server.get('/api/groups/1');
+
+    const groups = response.body;
+
+    expect(response.status).toBe(200)
+    expect(groups.id).toBe(1)
+    expect(groups.groupName).toBe('updated name 1')
+
+  });
+
+  it('Should remove a group when delete request is made to /api/groups/:id', async () => {
+
+    let response = await server.delete('/api/groups/1');
+
+    const groups = response.body;
+
+    expect(response.status).toBe(200)
 
   });
 
