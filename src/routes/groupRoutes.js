@@ -16,9 +16,9 @@ const { groups, associations } = require('../models/index.js');
 // post, put, and delete for admin management of a group itself
 groupRouter.post('/groups', handleGroupCreate);
 groupRouter.put('/groups/:id', handleGroupUpdate);
-// groupRouter.delete('/group/:id', handleDelete);
-// groupRouter.get('/group', handleGetAll);
-// groupRouter.get('/group/:id', handleGetOne);
+// groupRouter.delete('/groups/:id', handleDelete);
+groupRouter.get('/groups', handleGetAllGroups);
+// groupRouter.get('/groups/:id', handleGetOne);
 
 async function handleGroupCreate(request, response, next) {
 
@@ -52,6 +52,18 @@ async function handleGroupUpdate(req, res, next) {
     console.log(error);
   }
 
-}
+};
+
+async function handleGetAllGroups(req, res, next) {
+
+  try {
+    let allGroups = await groups.findAll({});
+    res.status(200).json(allGroups);
+  } catch (error) {
+    res.status(400);
+    console.log(error);
+  }
+
+};
 
 module.exports = groupRouter;
