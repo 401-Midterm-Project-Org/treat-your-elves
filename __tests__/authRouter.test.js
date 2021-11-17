@@ -1,9 +1,7 @@
 'use strict';
 
 const { db } = require('../src/models');
-
 const supertest = require('supertest');
-
 const app = require('../src/server.js');
 const server = supertest(app.server);
 
@@ -14,7 +12,6 @@ beforeAll( async () => {
 afterAll( async () => {
   await db.drop()
 });
-
 
 describe('Testing /signup and /signin routes', () => {
 
@@ -36,7 +33,7 @@ describe('Testing /signup and /signin routes', () => {
     expect(userObject.user.password).toBeDefined()
     expect(userObject.user.token).toBeDefined()
 
-  })
+  });
 
   it('Should return a user and a token when post request is made to /signin', async () => {
 
@@ -48,5 +45,5 @@ describe('Testing /signup and /signin routes', () => {
     expect(userObject.user.id).toBeDefined()
     expect(userObject.user.token).toBeDefined()
 
-  })
-})
+  });
+});
