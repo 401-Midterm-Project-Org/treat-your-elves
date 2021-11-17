@@ -16,7 +16,7 @@ afterAll( async () => {
 });
 
 
-describe('Testing /signup routes', () => {
+describe('Testing /signup and /signin routes', () => {
 
   let users = {
     username: 'username1',
@@ -25,18 +25,27 @@ describe('Testing /signup routes', () => {
     token: null
   }
   
-  it('Should return a user and  a token', async () => {
+  it('Should return a user and a token when post request is made to /signup', async () => {
 
     const response = await server.post('/signup').send(users);
-
     const userObject = response.body;
-
-    console.log(userObject.user.username, '<-- CONSOLE LOG')
 
     expect(response.status).toBe(201)
     expect(userObject.user.username).toBe('username1')
     expect(userObject.user.name).toBe('supertest1')
     expect(userObject.user.password).toBeDefined()
+    expect(userObject.user.token).toBeDefined()
+
+  })
+
+  it('Should return a user and a token when post request is made to /signin', async () => {
+
+    const response = await server.post('/signin').auth(users.username, users.password);
+    const userObject = response.body;
+
+    expect(response.status).toBe(200)
+    expect(userObject.user.username).toBe('username1')
+    expect(userObject.user.id).toBeDefined()
     expect(userObject.user.token).toBeDefined()
 
   })
