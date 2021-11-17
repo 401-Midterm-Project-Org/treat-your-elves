@@ -1,5 +1,7 @@
 'use strict';
 
+const { VIRTUAL } = require("sequelize");
+
 const userGroupAssociationsModel = (sequelize, DataTypes) => {
   const model = sequelize.define('GroupAssociations', {
 
@@ -11,21 +13,32 @@ const userGroupAssociationsModel = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },
-
-    userRole: {
-      allowNull: false,
-      type: DataTypes.ENUM('user', 'admin'),
-      defaultValue: 'user'
-    },
-
-    wishListId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
     }
-    
-    //TODO: associate secret santa to user, may start as null
 
+    // userRole: {
+    //   allowNull: false,
+    //   type: DataTypes.ENUM('user', 'admin'),
+    //   defaultValue: 'user'
+    // },
+
+    // secretSanta: {
+    //   allowNull: true,
+    //   type: DataTypes.INTEGER,
+    //   defaultValue: null
+    // }
+
+    // capabilities: {
+    //   allowNull: false,
+    //   type:  DataTypes.VIRTUAL,
+    //   get() {
+    //     const acl = {
+    //       user:['read', 'create', 'update', 'delete'],
+    //       admin:['read', 'create', 'update', 'delete']
+    //     };
+    //     return acl[this.userRole];
+    //   }
+    // }
+    
   })
 
   return model;
