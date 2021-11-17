@@ -16,7 +16,7 @@ const { groups, associations } = require('../models/index.js');
 // post, put, and delete for admin management of a group itself
 groupRouter.post('/groups', handleGroupCreate);
 groupRouter.put('/groups/:id', handleGroupUpdate);
-// groupRouter.delete('/groups/:id', handleDelete);
+groupRouter.delete('/groups/:id', handleDeleteGroup);
 groupRouter.get('/groups', handleGetAllGroups);
 groupRouter.get('/groups/:id', handleGetOneGroup);
 
@@ -72,6 +72,20 @@ async function handleGetOneGroup(req, res, next) {
     const id = req.params.id;
     let theRecord = await groups.findOne({where: { id }});
     res.status(200).json(theRecord);
+  }catch (error){
+    res.status(400);
+    console.log(error);
+  }
+
+};
+
+async function handleDeleteGroup(req, res, next) {
+
+  try{
+    const id = req.params.id;
+    await groups.destroy({ where: { id } });
+    await associations.destroy({ where: { groupId:id } });
+    res.status(200).send('deleted!');
   }catch (error){
     res.status(400);
     console.log(error);
