@@ -23,6 +23,20 @@ router.get('/api/:model/:id', handleGetOne);
 router.put('/api/:model/:id', handleUpdate);
 router.delete('/api/:model/:id', handleDelete);
 
+/* 
+MVP TO DO:
+- [x] Sign up
+- [x] Sign in
+- []  Create a group
+- []  On group creation Groups-Association table is filled (try `afterCreate()` Hook)
+- []  Add users to group
+- []  Remove users from group
+- []  Users have wishlists created on addition to a group
+- []  Users can perform CRUD on their wishlists
+- []  Randomly assign users to each other's wishlists
+- []  Make other user's wishlist visible (scope: all members of group)
+- []  All users can mark a wishlist item as fulfilled (secretly)
+*/
 
 async function handleCreate(request, response, next) {
 

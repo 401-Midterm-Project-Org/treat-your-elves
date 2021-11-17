@@ -14,8 +14,9 @@ const userGroupAssociationsModel = (sequelize, DataTypes) => {
     },
 
     userRole: {
-      type: DataTypes.STRING,
       allowNull: false,
+      type: DataTypes.ENUM('user', 'admin'),
+      defaultValue: 'user'
     },
 
     wishListId: {
