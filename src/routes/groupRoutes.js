@@ -18,7 +18,7 @@ groupRouter.post('/groups', handleGroupCreate);
 groupRouter.put('/groups/:id', handleGroupUpdate);
 // groupRouter.delete('/groups/:id', handleDelete);
 groupRouter.get('/groups', handleGetAllGroups);
-// groupRouter.get('/groups/:id', handleGetOne);
+groupRouter.get('/groups/:id', handleGetOneGroup);
 
 async function handleGroupCreate(request, response, next) {
 
@@ -60,6 +60,19 @@ async function handleGetAllGroups(req, res, next) {
     let allGroups = await groups.findAll({});
     res.status(200).json(allGroups);
   } catch (error) {
+    res.status(400);
+    console.log(error);
+  }
+
+};
+
+async function handleGetOneGroup(req, res, next) {
+
+  try{
+    const id = req.params.id;
+    let theRecord = await groups.findOne({where: { id }});
+    res.status(200).json(theRecord);
+  }catch (error){
     res.status(400);
     console.log(error);
   }
