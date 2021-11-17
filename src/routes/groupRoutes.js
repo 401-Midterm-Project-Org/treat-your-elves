@@ -14,13 +14,13 @@ const { groups, associations } = require('../models/index.js');
 
 
 // post, put, and delete for admin management of a group itself
-groupRouter.post('/groups', handleCreate);
-groupRouter.put('/group/:id', handleUpdate);
+groupRouter.post('/groups', handleGroupCreate);
+groupRouter.put('/groups/:id', handleGroupUpdate);
 // groupRouter.delete('/group/:id', handleDelete);
 // groupRouter.get('/group', handleGetAll);
 // groupRouter.get('/group/:id', handleGetOne);
 
-async function handleCreate(request, response, next) {
+async function handleGroupCreate(request, response, next) {
 
   // use model while restricting routes?
   try {
@@ -38,5 +38,20 @@ async function handleCreate(request, response, next) {
   }
 
 };
+
+async function handleGroupUpdate(req, res, next) {
+
+  try{
+    const id = req.params.id;
+    const newItem = req.body;
+    let theRecord = await groups.findOne({where: { id }}).then(record => record.update(newItem));
+    res.status(200).json(theRecord);
+
+  }catch (error){
+    res.status(400);
+    console.log(error);
+  }
+
+}
 
 module.exports = groupRouter;
