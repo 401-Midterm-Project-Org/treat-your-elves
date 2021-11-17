@@ -9,6 +9,7 @@ const signIn = require('./routes/sign-in.js')
 const app = express();
 
 const routes = require('./routes/routes.js');
+const groupRoutes = require('./routes/groupRoutes.js');
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -20,6 +21,8 @@ app.use(signUp);
 app.use(signIn);
 
 app.use(routes);
+
+app.use(groupRoutes);
 
 module.exports = {
   server: app,
