@@ -9,7 +9,7 @@ const wishListItemModel = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    associationsID: {
+    associationsId: {
       type: DataTypes.INTEGER,
       allowNull: false
     }
