@@ -9,8 +9,8 @@ const { associations, listItem } = require('../models/index.js');
 
 listRouter.post('/listItem', handleListItemCreate);
 listRouter.put('/listItem/:id', handleListItemUpdate);
-// listRouter.delete('/listItem/:id', handleDeleteGroup);
-// listRouter.get('/listItem', handleGetAllGroups);
+listRouter.delete('/listItem/:id', handleDeleteListItem);
+listRouter.get('/listItem', handleGetAllListItems);
 // listRouter.get('/listItem/:id', handleGetOneGroup);
 
 async function handleListItemCreate(request, response, next) {
@@ -64,18 +64,16 @@ async function handleListItemUpdate(req, res, next) {
 
 // };
 
-// async function handleDeleteGroup(req, res, next) {
+async function handleDeleteListItem(req, res, next) {
 
-//   try{
-//     const id = req.params.id;
-//     await groups.destroy({ where: { id } });
-//     await associations.destroy({ where: { groupId:id } });
-//     res.status(200).send('deleted!');
-//   }catch (error){
-//     res.status(400);
-//     console.log(error);
-//   }
+  try{
+    const id = req.params.id;
+    await listItem.destroy({ where: { id } });
+    res.status(200).send('deleted!');
+  }catch (error){
+    res.status(400).send(error);
+  }
 
-// };
+};
 
 module.exports = listRouter;
