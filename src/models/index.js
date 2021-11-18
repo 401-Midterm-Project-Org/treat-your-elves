@@ -8,9 +8,18 @@ const userGroupAssociationsModel = require('./Group-Associations.js');
 const listItemModel = require('./List-Item.js');
 const santaPairModel = require('./Santa')
 
-const DATABASE_URL = process.env.DATABASE_URL;
+const DATABASE_URL = process.env.NODE_ENV === 'test' 
+  ? 'sqlite::memory:' 
+  : process.env.DATABASE_URL;
 
-const sequelize = new Sequelize(DATABASE_URL);
+const DATABASE_CONFIG = process.env.NODE_ENV === 'production' ? {
+  dialectOptions: {
+    ssl: true,
+    rejectUnauthorized: false,
+  }
+} : {}
+
+const sequelize = new Sequelize(DATABASE_URL, DATABASE_CONFIG);
 
 // instantiate our DB with our models
 const groups = groupModel(sequelize, DataTypes);
