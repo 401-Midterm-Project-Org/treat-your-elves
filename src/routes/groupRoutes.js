@@ -9,7 +9,7 @@ const express = require('express');
 
 const groupRouter = express.Router();
 
-const { groups, associations } = require('../models/index.js');
+const { groups, associations, santaPairs } = require('../models/index.js');
 
 
 // post, put, and delete for admin management of a group itself
@@ -84,6 +84,7 @@ async function handleDeleteGroup(req, res, next) {
     const id = req.params.id;
     await groups.destroy({ where: { id } });
     await associations.destroy({ where: { groupId:id } });
+    await santaPairs.destroy({ where: { groupId:id } });
     res.status(200).send('deleted!');
   }catch (error){
     res.status(400);

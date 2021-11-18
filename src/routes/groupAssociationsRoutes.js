@@ -7,8 +7,8 @@ const accessControl = require('../middleware/acl');
 const associationsRouter = express.Router();
 
 // post, put, and delete for both admin and users for wishlists
-associationsRouter.post('/associations/:groupid/:userid',accessControl('delete'), handleAssociationCreate);
-associationsRouter.delete('/associations/:id', accessControl('delete'), handleDeleteAssociation);
+associationsRouter.post('/associations/:groupid/:userid', handleAssociationCreate);
+associationsRouter.delete('/associations/:id', handleDeleteAssociation);
 associationsRouter.get('/associations', handleGetAllAssociations);
 associationsRouter.get('/associations/:id', handleGetOneAssociation);
 associationsRouter.get('/groupmembers/:groupid', handleGetGroupAssociations);

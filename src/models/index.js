@@ -6,6 +6,7 @@ const userModel = require('./Users.js');
 const groupModel = require('./Groups.js');
 const userGroupAssociationsModel = require('./Group-Associations.js');
 const listItemModel = require('./List-Item.js');
+const santaPairModel = require('./Santa')
 
 const DATABASE_URL = 'sqlite:memory:';
 
@@ -16,6 +17,7 @@ const groups = groupModel(sequelize, DataTypes);
 const users = userModel(sequelize, DataTypes);
 const associations = userGroupAssociationsModel(sequelize, DataTypes);
 const listItem = listItemModel(sequelize, DataTypes);
+const santaPairs = santaPairModel(sequelize, DataTypes);
 
 // connecting group to user admin
 users.hasMany(groups, { foreignKey: 'groupAdminId', sourceKey: 'id' });
@@ -38,5 +40,6 @@ module.exports = {
   users,
   groups,
   associations,
-  listItem
+  listItem,
+  santaPairs
 };
