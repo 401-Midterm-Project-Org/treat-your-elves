@@ -4,14 +4,14 @@ const express = require('express');
 
 const listRouter = express.Router();
 
-const { associations, listItem } = require('../models/index.js');
+const { listItem } = require('../models/index.js');
 
 
 listRouter.post('/listItem', handleListItemCreate);
 listRouter.put('/listItem/:id', handleListItemUpdate);
 listRouter.delete('/listItem/:id', handleDeleteListItem);
 listRouter.get('/listItem', handleGetAllListItems);
-// listRouter.get('/listItem/:id', handleGetOneGroup);
+listRouter.get('/listItem/:id', handleGetOneItem);
 
 async function handleListItemCreate(request, response, next) {
 
@@ -39,30 +39,28 @@ async function handleListItemUpdate(req, res, next) {
 
 };
 
-// async function handleGetAllGroups(req, res, next) {
+async function handleGetAllListItems(req, res, next) {
 
-//   try {
-//     let allGroups = await groups.findAll({});
-//     res.status(200).json(allGroups);
-//   } catch (error) {
-//     res.status(400);
-//     console.log(error);
-//   }
+  try {
+    let allItems = await listItem.findAll({});
+    res.status(200).json(allItems);
+  } catch (error) {
+    res.status(400).status(error);
+  }
 
-// };
+};
 
-// async function handleGetOneGroup(req, res, next) {
+async function handleGetOneItem(req, res, next) {
 
-//   try{
-//     const id = req.params.id;
-//     let theRecord = await groups.findOne({where: { id }});
-//     res.status(200).json(theRecord);
-//   }catch (error){
-//     res.status(400);
-//     console.log(error);
-//   }
+  try{
+    const id = req.params.id;
+    let theItem = await listItem.findOne({where: { id }});
+    res.status(200).json(theItem);
+  }catch (error){
+    res.status(400).status(error);
+  }
 
-// };
+};
 
 async function handleDeleteListItem(req, res, next) {
 
