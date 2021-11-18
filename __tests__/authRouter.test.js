@@ -19,7 +19,6 @@ describe('Testing /signup and /signin routes', () => {
     username: 'username1',
     name: 'supertest1',
     password: 'password1',
-    token: null
   }
   
   it('Should return a user and a token when post request is made to /signup', async () => {

@@ -13,7 +13,7 @@ afterAll( async () => {
   await db.drop()
 });
 
-describe('Testing requests to /api/groups route', () => {
+describe('Testing requests to /groups route', () => {
 
   let user1 = {
     username: 'username1',
@@ -27,11 +27,11 @@ describe('Testing requests to /api/groups route', () => {
     groupAdminId: 1
   }
   
-  it('Should create a group when post request is made to /api/groups', async () => {
+  it('Should create a group when post request is made to /groups', async () => {
 
     let response = await server.post('/signup').send(user1);
 
-    response = await server.post('/api/groups').send(group);
+    response = await server.post('/groups').send(group);
     const groupObject = response.body.group;
 
     expect(response.status).toBe(201)
@@ -45,9 +45,9 @@ describe('Testing requests to /api/groups route', () => {
     groupAdminId: 1
   }
 
-  it('Should update a group when put request is made to /api/groups/:id', async () => {
+  it('Should update a group when put request is made to /groups/:id', async () => {
 
-    let response = await server.put('/api/groups/1').send(updatedGroup1);
+    let response = await server.put('/groups/1').send(updatedGroup1);
 
     const groupObject = response.body;
 
@@ -57,9 +57,9 @@ describe('Testing requests to /api/groups route', () => {
 
   });
 
-  it('Should find all groups when get request is made to /api/groups', async () => {
+  it('Should find all groups when get request is made to /groups', async () => {
 
-    let response = await server.get('/api/groups');
+    let response = await server.get('/groups');
 
     const groups = response.body;
 
@@ -72,9 +72,9 @@ describe('Testing requests to /api/groups route', () => {
   });
 
 
-  it('Should find one groups when get request is made to /api/groups/:id', async () => {
+  it('Should find one groups when get request is made to /groups/:id', async () => {
 
-    let response = await server.get('/api/groups/1');
+    let response = await server.get('/groups/1');
 
     const groups = response.body;
 
@@ -84,11 +84,9 @@ describe('Testing requests to /api/groups route', () => {
 
   });
 
-  it('Should remove a group when delete request is made to /api/groups/:id', async () => {
+  it('Should remove a group when delete request is made to /groups/:id', async () => {
 
-    let response = await server.delete('/api/groups/1');
-
-    const groups = response.body;
+    let response = await server.delete('/groups/1');
 
     expect(response.status).toBe(200)
 
