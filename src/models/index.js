@@ -8,7 +8,7 @@ const userGroupAssociationsModel = require('./Group-Associations.js');
 const listItemModel = require('./List-Item.js');
 const santaPairModel = require('./Santa')
 
-const DATABASE_URL = 'sqlite:memory:';
+const DATABASE_URL = process.env.DATABASE_URL;
 
 const sequelize = new Sequelize(DATABASE_URL);
 
