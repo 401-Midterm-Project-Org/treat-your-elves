@@ -110,19 +110,6 @@ async function handleGetOne(req, res, next) {
 
 }
 
-async function handleGetOne(req, res, next) {
-
-  try{
-    const id = req.params.id;
-    let theRecord = await req.model.findOne({where: { id }});
-    res.status(200).json(theRecord);
-  }catch (error){
-    res.status(400);
-    console.log(error);
-  }
-
-}
-
 async function handleUpdate(req, res, next) {
 
   try{

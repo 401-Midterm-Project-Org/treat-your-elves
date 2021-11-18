@@ -11,7 +11,7 @@ const basicAuth = require('../middleware/basic.js');
 authRouter.post('/signin', basicAuth, async (request, response, next) => {
 
   try {
-console.log(request)
+console.log(request, '<-- request --<<')
     const user = {
       user: request.user,
       token: request.user.token,
