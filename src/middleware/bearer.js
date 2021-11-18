@@ -2,18 +2,19 @@
 
 const { users } = require('../models/index.js');
 
-modules.exports = async (request, response, next) => {
+module.exports = async (request, response, next) => {
 
   try {
     if(!request.headers.authorization) {
-      _authError();
+      throw new Error('There is no authorization header');
     }
     const token = request.headers.authorization.split(' ').pop();
     const validUser = await users.authenticateToken(token);
+    console.log('valid user:', validUser);
     request.user = validUser;
     request.token = validUser.token;
     next()
   } catch (e) {
-    response.status(403).send('Invalid login.', e);
+    response.status(403).send('BEARER: token not authenticated.', e);
   }
 }

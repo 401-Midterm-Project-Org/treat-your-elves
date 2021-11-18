@@ -2,7 +2,7 @@
 
 const express = require('express');
 const { associations, santaPairs } = require('../models/index.js');
-const accessControl = require('../middleware/acl');
+const accessControl = require('../middleware/groupAcl');
 
 const santaRouter = express.Router();
 

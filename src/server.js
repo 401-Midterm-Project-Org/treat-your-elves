@@ -8,7 +8,6 @@ const signUp = require('./routes/sign-up.js');
 const signIn = require('./routes/sign-in.js')
 const app = express();
 
-const routes = require('./routes/routes.js');
 const groupRoutes = require('./routes/groupRoutes.js');
 const associationsRoutes = require('./routes/groupAssociationsRoutes');
 const listRoutes = require('./routes/listRoutes.js');
@@ -23,7 +22,6 @@ app.use(express.urlencoded({extended: true}));
 app.use(signUp);
 app.use(signIn);
 
-app.use(routes);
 app.use(associationsRoutes);
 app.use(listRoutes);
 app.use(santaRoutes);

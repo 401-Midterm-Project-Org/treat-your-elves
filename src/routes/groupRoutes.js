@@ -11,13 +11,15 @@ const groupRouter = express.Router();
 
 const { groups, associations, santaPairs } = require('../models/index.js');
 
+const bearerAuth = require('../middleware/bearer');
+const permissions = require('../middleware/groupAcl.js');
 
 // post, put, and delete for admin management of a group itself
-groupRouter.post('/groups', handleGroupCreate);
-groupRouter.put('/groups/:id', handleGroupUpdate);
-groupRouter.delete('/groups/:id', handleDeleteGroup);
-groupRouter.get('/groups', handleGetAllGroups);
-groupRouter.get('/groups/:id', handleGetOneGroup);
+groupRouter.post('/groups', bearerAuth, handleGroupCreate);
+groupRouter.put('/groups/:id', bearerAuth, permissions('update'), handleGroupUpdate);
+groupRouter.delete('/groups/:id', bearerAuth, permissions('delete'), handleDeleteGroup);
+groupRouter.get('/groups', bearerAuth, handleGetAllGroups);
+groupRouter.get('/groups/:id', bearerAuth, handleGetOneGroup);
 
 async function handleGroupCreate(request, response, next) {
 
