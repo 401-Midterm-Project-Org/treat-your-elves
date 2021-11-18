@@ -7,9 +7,8 @@ const listRouter = express.Router();
 const { associations, listItem } = require('../models/index.js');
 
 
-// post, put, and delete for admin management of a group itself
 listRouter.post('/listItem', handleListItemCreate);
-// listRouter.put('/listItem/:id', handleGroupUpdate);
+listRouter.put('/listItem/:id', handleListItemUpdate);
 // listRouter.delete('/listItem/:id', handleDeleteGroup);
 // listRouter.get('/listItem', handleGetAllGroups);
 // listRouter.get('/listItem/:id', handleGetOneGroup);
@@ -25,20 +24,20 @@ async function handleListItemCreate(request, response, next) {
 
 };
 
-// async function handleGroupUpdate(req, res, next) {
+async function handleListItemUpdate(req, res, next) {
 
-//   try{
-//     const id = req.params.id;
-//     const newItem = req.body;
-//     let theRecord = await groups.findOne({where: { id }}).then(record => record.update(newItem));
-//     res.status(200).json(theRecord);
+  try{
+    const id = req.params.id;
+    const newItem = req.body;
+    let updatedItem = await listItem.findOne({where: { id }}).then(record => record.update(newItem));
+    res.status(200).json(updatedItem);
 
-//   }catch (error){
-//     res.status(400);
-//     console.log(error);
-//   }
+  }catch (error){
+    res.status(400);
+    console.log(error);
+  }
 
-// };
+};
 
 // async function handleGetAllGroups(req, res, next) {
 
