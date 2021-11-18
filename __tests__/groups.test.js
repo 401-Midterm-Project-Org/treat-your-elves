@@ -40,6 +40,22 @@ describe('Testing requests to /groups route', () => {
 
   });
 
+  let group2 = {
+    groupName: 'name 2',
+    groupAdminId: 1
+  }
+
+  it('Should create multiple group when more post requests are made to /groups', async () => {
+
+    let response = await server.post('/groups').send(group2);
+    const groupObject = response.body.group;
+
+    expect(response.status).toBe(201)
+    expect(groupObject.id).toBe(2)
+    expect(groupObject.groupName).toBe('name 2')
+
+  });
+
   let updatedGroup1 = {
     groupName: 'updated name 1',
     groupAdminId: 1
@@ -63,7 +79,7 @@ describe('Testing requests to /groups route', () => {
 
     const groups = response.body;
 
-    console.log(groups, '<-- groups --<<')
+    console.log(groups, '<-- SHOULD BE ALL GROUPS --<<')
 
     expect(response.status).toBe(200)
     expect(groups[0].id).toBe(1)
