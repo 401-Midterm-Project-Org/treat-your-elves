@@ -24,7 +24,7 @@ const userGroupAssociationsModel = (sequelize, DataTypes) => {
       get() {
         const acl = {
           user:['read', 'createWish', 'updateWish', 'deleteWish'],
-          admin:['read', 'createWish', 'updateWish', 'deleteWish', 'createGroupMember', 'deleteGroupMember', 'updateGroup', 'deleteGroup']
+          admin:['read', 'createWish', 'updateWish', 'deleteWish', 'createGroupMember', 'deleteGroupMember', 'updateGroup', 'deleteGroup', 'generateGroupPairs']
         };
         return acl[this.role];
       }

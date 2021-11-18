@@ -2,19 +2,21 @@
 
 const express = require('express');
 const { associations, santaPairs } = require('../models/index.js');
-const accessControl = require('../middleware/groupAcl');
+
+const bearerAuth = require('../middleware/bearer');
+const permissions = require('../middleware/acl.js');
 
 const santaRouter = express.Router();
 
-santaRouter.post('/santa/:groupid', handlePairSantas);
-santaRouter.get('/santa', getAllPairs);
-santaRouter.get('/santa/:groupid', getGroupPairs);
+santaRouter.post('/santa/:id', bearerAuth, permissions('generateGroupPairs'), handlePairSantas);
+santaRouter.get('/santa', bearerAuth, getAllPairs);
+santaRouter.get('/santa/:groupid', bearerAuth, getGroupPairs);
 
 async function handlePairSantas(request, response, next){
 
   try{
     //grabs group id on path parameter
-    const id = request.params.groupid;
+    const id = request.params.id;
     
     //gets group members from the associations table
     const groupMembers = await associations.findAll({where: {groupId: id}});

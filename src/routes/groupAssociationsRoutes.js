@@ -3,7 +3,7 @@
 const express = require('express');
 const { associations, users, groups } = require('../models/index.js');
 const bearerAuth = require('../middleware/bearer');
-const permissions = require('../middleware/groupAcl.js');
+const permissions = require('../middleware/acl.js');
 
 const associationsRouter = express.Router();
 

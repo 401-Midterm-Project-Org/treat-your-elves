@@ -10,7 +10,7 @@ module.exports = (capability) => {
       let groupId = req.params.id;
       let userId = req.user.id;
       const association = await associations.findOne({ where: { groupId, userId }})
-      console.log('Association: ', association)
+
       if (association.capabilities.includes(capability)) {
         next();
       }

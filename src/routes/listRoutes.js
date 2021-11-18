@@ -6,12 +6,13 @@ const listRouter = express.Router();
 
 const { listItem } = require('../models/index.js');
 
+const bearerAuth = require('../middleware/bearer');
 
-listRouter.post('/listItem', handleListItemCreate);
-listRouter.put('/listItem/:id', handleListItemUpdate);
-listRouter.delete('/listItem/:id', handleDeleteListItem);
-listRouter.get('/listItem', handleGetAllListItems);
-listRouter.get('/listItem/:id', handleGetOneItem);
+listRouter.post('/listItem', bearerAuth, handleListItemCreate);
+listRouter.put('/listItem/:id', bearerAuth, handleListItemUpdate);
+listRouter.delete('/listItem/:id', bearerAuth, handleDeleteListItem);
+listRouter.get('/listItem', bearerAuth, handleGetAllListItems);
+listRouter.get('/listItem/:id', bearerAuth, handleGetOneItem);
 
 async function handleListItemCreate(request, response, next) {
 
