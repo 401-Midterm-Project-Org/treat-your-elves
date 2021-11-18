@@ -23,8 +23,8 @@ const userGroupAssociationsModel = (sequelize, DataTypes) => {
       type:  DataTypes.VIRTUAL,
       get() {
         const acl = {
-          user:['read'],
-          admin:['read', 'create', 'update', 'delete']
+          user:['read', 'createWish', 'updateWish', 'deleteWish'],
+          admin:['read', 'createWish', 'updateWish', 'deleteWish', 'createGroupMember', 'deleteGroupMember', 'updateGroup', 'deleteGroup']
         };
         return acl[this.role];
       }

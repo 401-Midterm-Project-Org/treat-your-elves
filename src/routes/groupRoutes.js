@@ -16,8 +16,8 @@ const permissions = require('../middleware/groupAcl.js');
 
 // post, put, and delete for admin management of a group itself
 groupRouter.post('/groups', bearerAuth, handleGroupCreate);
-groupRouter.put('/groups/:id', bearerAuth, permissions('update'), handleGroupUpdate);
-groupRouter.delete('/groups/:id', bearerAuth, permissions('delete'), handleDeleteGroup);
+groupRouter.put('/groups/:id', bearerAuth, permissions('updateGroup'), handleGroupUpdate);
+groupRouter.delete('/groups/:id', bearerAuth, permissions('deleteGroup'), handleDeleteGroup);
 groupRouter.get('/groups', bearerAuth, handleGetAllGroups);
 groupRouter.get('/groups/:id', bearerAuth, handleGetOneGroup);
 
