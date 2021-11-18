@@ -2,13 +2,13 @@
 
 const express = require('express');
 const { associations, users, groups } = require('../models/index.js');
-const dataModules = require('../models/index.js');
+const accessControl = require('../middleware/acl');
 
 const associationsRouter = express.Router();
 
 // post, put, and delete for both admin and users for wishlists
-associationsRouter.post('/associations/:id/:userId', handleAssociationCreate);
-associationsRouter.delete('/associations/:id', handleDeleteAssociation);
+associationsRouter.post('/associations/:groupid/:userid',accessControl('delete'), handleAssociationCreate);
+associationsRouter.delete('/associations/:id', accessControl('delete'), handleDeleteAssociation);
 associationsRouter.get('/associations', handleGetAllAssociations);
 associationsRouter.get('/associations/:id', handleGetOneAssociation);
 associationsRouter.get('/groupmembers/:groupid', handleGetGroupAssociations);
@@ -17,8 +17,8 @@ async function handleAssociationCreate(request, response, next) {
 
   // use model while restricting routes?
   try {
-    let id = request.params.id;
-    let userId = request.params.userId;
+    let id = request.params.groupid;
+    let userId = request.params.userid;
     let group = await groups.findOne({where: { id }});
     let user = await users.findOne({where: { id : userId }})
     let groupAssociation = await associations.create({groupId: group.id, userId: user.id})
