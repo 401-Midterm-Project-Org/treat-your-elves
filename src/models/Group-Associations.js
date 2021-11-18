@@ -1,7 +1,5 @@
 'use strict';
 
-const { VIRTUAL } = require("sequelize");
-
 const userGroupAssociationsModel = (sequelize, DataTypes) => {
   const model = sequelize.define('GroupAssociations', {
 
@@ -13,31 +11,24 @@ const userGroupAssociationsModel = (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+
+    role: {
+      allowNull: false,
+      type: DataTypes.ENUM('user', 'admin'),
+      defaultValue: 'user'
+    },
+
+    capabilities: {
+      type:  DataTypes.VIRTUAL,
+      get() {
+        const acl = {
+          user:['read'],
+          admin:['read', 'create', 'update', 'delete']
+        };
+        return acl[this.role];
+      }
     }
-
-    // userRole: {
-    //   allowNull: false,
-    //   type: DataTypes.ENUM('user', 'admin'),
-    //   defaultValue: 'user'
-    // },
-
-    // secretSanta: {
-    //   allowNull: true,
-    //   type: DataTypes.INTEGER,
-    //   defaultValue: null
-    // }
-
-    // capabilities: {
-    //   allowNull: false,
-    //   type:  DataTypes.VIRTUAL,
-    //   get() {
-    //     const acl = {
-    //       user:['read', 'create', 'update', 'delete'],
-    //       admin:['read', 'create', 'update', 'delete']
-    //     };
-    //     return acl[this.userRole];
-    //   }
-    // }
     
   })
 

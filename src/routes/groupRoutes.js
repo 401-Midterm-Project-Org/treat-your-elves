@@ -6,7 +6,6 @@
 */
 
 const express = require('express');
-const dataModules = require('../models/index.js');
 
 const groupRouter = express.Router();
 
@@ -25,7 +24,7 @@ async function handleGroupCreate(request, response, next) {
   // use model while restricting routes?
   try {
     let groupRecord = await groups.create(request.body);
-    let groupAssociation = await associations.create({groupId: groupRecord.id, userId: groupRecord.groupAdminId})
+    let groupAssociation = await associations.create({groupId: groupRecord.id, userId: groupRecord.groupAdminId, role: 'admin'})
 
     const output = {
       group: groupRecord,
