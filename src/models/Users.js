@@ -30,11 +30,6 @@ const userModel = (sequelize, DataTypes) => {
         return jwt.sign({ username: this.username }, SECRET)
       }
     },
-
-    groups:{
-      type: DataTypes.ARRAY(DataTypes.TEXT),
-      allowNull: true
-    },
   });
 
   model.beforeCreate(async (user) => {

@@ -1,18 +1,24 @@
 'use strict';
 
+const { associations } = require("../models");
+
 module.exports = (capability) => {
 
-  return (req, res, next) => {
+  return async (req, res, next) => {
 
     try {
-      if (req.user.capabilities.includes(capability)) {
+      let groupId = req.params.id;
+      let userId = req.user.id;
+      const association = await associations.findOne({ where: { groupId, userId }})
+
+      if (association.capabilities.includes(capability)) {
         next();
       }
       else {
         next('Access Denied');
       }
     } catch (e) {
-      next('Invalid Login');
+      next('ACLI: Invalid Login');
     }
 
   };

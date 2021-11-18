@@ -2,22 +2,23 @@
 
 const express = require('express');
 const { associations, users, groups } = require('../models/index.js');
-const accessControl = require('../middleware/acl');
+const bearerAuth = require('../middleware/bearer');
+const permissions = require('../middleware/acl.js');
 
 const associationsRouter = express.Router();
 
 // post, put, and delete for both admin and users for wishlists
-associationsRouter.post('/associations/:groupid/:userid', handleAssociationCreate);
-associationsRouter.delete('/associations/:id', handleDeleteAssociation);
-associationsRouter.get('/associations', handleGetAllAssociations);
-associationsRouter.get('/associations/:id', handleGetOneAssociation);
-associationsRouter.get('/groupmembers/:groupid', handleGetGroupAssociations);
+associationsRouter.post('/associations/:id/:userid', bearerAuth, permissions('createGroupMember'),handleAssociationCreate);
+associationsRouter.delete('/associations/:id/:userid', bearerAuth, permissions('deleteGroupMember'), handleDeleteAssociation);
+associationsRouter.get('/associations', bearerAuth, handleGetAllAssociations);
+associationsRouter.get('/associations/:id', bearerAuth, handleGetOneAssociation);
+associationsRouter.get('/groupmembers/:groupid', bearerAuth, handleGetGroupAssociations);
 
 async function handleAssociationCreate(request, response, next) {
 
   // use model while restricting routes?
   try {
-    let id = request.params.groupid;
+    let id = request.params.id;
     let userId = request.params.userid;
     let group = await groups.findOne({where: { id }});
     let user = await users.findOne({where: { id : userId }})
@@ -42,8 +43,9 @@ async function handleDeleteAssociation(req, res, next) {
   // maybe revisit to add logic (perhaps middleware), so admins cannot be deleted this way.
 
   try{
-    const id = req.params.id;
-    await associations.destroy({ where: { id } });
+    const group = req.params.id;
+    const user = req.params.userid;
+    await associations.destroy({ where: { groupId: group, userId: user } });
     res.status(200).send('deleted!');
   }catch (error){
     res.status(400);

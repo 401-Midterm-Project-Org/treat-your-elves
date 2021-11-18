@@ -9,7 +9,7 @@ const listItemModel = require('./List-Item.js');
 const santaPairModel = require('./Santa')
 
 const DATABASE_URL = process.env.NODE_ENV === 'test' 
-  ? 'sqlite::memory:' 
+  ? 'sqlite:memory:' 
   : process.env.DATABASE_URL;
 
 const DATABASE_CONFIG = process.env.NODE_ENV === 'production' ? {
@@ -20,8 +20,6 @@ const DATABASE_CONFIG = process.env.NODE_ENV === 'production' ? {
     }
   }
 } : {}
-
-console.log(DATABASE_CONFIG, '<-- DATABASE CONFIG')
 
 const sequelize = new Sequelize(DATABASE_URL, DATABASE_CONFIG);
 
