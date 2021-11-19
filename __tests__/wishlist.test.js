@@ -30,13 +30,6 @@ describe('Testing requests to /listItem route', () => {
     groupAdminId: 1
   }
 
-  let association = {
-    groupId: 1,
-    userId: 1,
-    role: null,
-    type: null
-  }
-
   let item = {
     itemName: 'first item',
     associationsId: 1
@@ -66,11 +59,9 @@ describe('Testing requests to /listItem route', () => {
       .send(item)
       .set('Authorization', `Bearer ${token}`)
       .set('Accept', 'application/json');
-    const itemObject = response.body.item;
    
     expect(response.status).toBe(201)
-    // expect(itemObject.id).toBe(1)
-    // expect(itemObject.itemName).toBe('first name')
+
   });
 
 
@@ -79,7 +70,6 @@ describe('Testing requests to /listItem route', () => {
     associationsId: 1
   }
 
-  //update test times out
   it('Should update a list item when put request is made to /listItem/:id', async () => {
 
     const token = jwt.sign(user1, process.env.SECRET)
@@ -90,11 +80,7 @@ describe('Testing requests to /listItem route', () => {
       .set('Authorization', `Bearer ${token}`)
       .set('Accept', 'application/json');
 
-    const itemObject = response.body;
-
     expect(response.status).toBe(200)
-    // expect(itemObject.id).toBe(1)
-    // expect(itemObject.itemName).toBe('updated item name 1')
 
   });
 
@@ -112,7 +98,6 @@ describe('Testing requests to /listItem route', () => {
 
     expect(response.status).toBe(200)
     expect(item).toBe(item)
-    // expect(item).toBe('updated name 1')
 
   });
 
@@ -126,11 +111,7 @@ describe('Testing requests to /listItem route', () => {
       .send(updatedItem1)
       .set('Authorization', `Bearer ${token}`)
 
-    const item = response.body;
-
     expect(response.status).toBe(200)
-    // expect(item.id).toBe(1)
-    // expect(item.itemName).toE('updated name 1')
 
   });
 
