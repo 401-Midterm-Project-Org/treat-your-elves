@@ -81,22 +81,30 @@ describe('Testing requests to /groups route', () => {
 
   });
 
-  // let updatedGroup1 = {
-  //   groupName: 'updated name 1',
-  //   groupAdminId: 1
-  // }
+  let updatedGroup1 = {
+    groupName: 'updated name 1',
+    groupAdminId: 1
+  }
 
-  // it('Should update a group when put request is made to /groups/:id', async () => {
+  it('Should update a group when put request is made to /groups/:id', async () => {
 
-  //   let response = await server.put('/groups/1').send(updatedGroup1);
+    let response = await server.post('/signup').send(user1);
 
-  //   const groupObject = response.body;
+    const token = jwt.sign(user1, process.env.SECRET);
 
-  //   expect(response.status).toBe(200)
-  //   expect(groupObject.id).toBe(1)
-  //   expect(groupObject.groupName).toBe('updated name 1')
+    response = await server
+      .put('/groups/1')
+      .send(updatedGroup1)
+      .set('Authorization', `Bearer ${token}`)
+      .set('Accept', 'application/json');
 
-  // });
+    const groupObject = response.body;
+
+    expect(response.status).toBe(200)
+    expect(groupObject.id).toBe(1)
+    expect(groupObject.groupName).toBe('updated name 1')
+
+  });
 
   // it('Should find all groups when get request is made to /groups', async () => {
 
