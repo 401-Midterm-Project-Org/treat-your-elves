@@ -83,7 +83,7 @@ MVP is reached by implementing the following features:
 1. User is assigned to a group
 2. User prompted to sign up/log in
 3. User prompted to create wishlist
-4. User randomly assigned as a Secret Santa to a group member.
+4. Admin triggers secret santa assignment.
 5. User can view wishlist of assigned user.
 6. User can log out and log back in as needed.
 
