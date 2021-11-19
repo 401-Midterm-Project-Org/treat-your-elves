@@ -9,11 +9,6 @@ process.env.SECRET = 'secretstuffhere';
 
 const jwt = require('jsonwebtoken');
 
-let users = {
-  admin: { username: 'admin', password: 'password', role: 'admin' },
-  user: { username: 'user', password: 'password', role: 'user' },
-};
-
 beforeAll( async () => {
   await db.sync()
 });
@@ -35,13 +30,11 @@ describe('Testing requests to /groups route', () => {
     groupAdminId: 1
   }
   
-  it('Should create a group when post request is made to /groups', async () => {
+  it('Should create a group when a post request is made to /groups', async () => {
 
     let response = await server.post('/signup').send(user1);
 
     const token = jwt.sign(user1, process.env.SECRET);
-
-    console.log(token, '<-- TOKEN --<<')
 
     response = await server
       .post('/groups')
@@ -63,6 +56,7 @@ describe('Testing requests to /groups route', () => {
   }
 
   it('Should create multiple group when more post requests are made to /groups', async () => {
+
     let response = await server.post('/signup').send(user1);
 
     const token = jwt.sign(user1, process.env.SECRET);
@@ -86,7 +80,7 @@ describe('Testing requests to /groups route', () => {
     groupAdminId: 1
   }
 
-  it('Should update a group when put request is made to /groups/:id', async () => {
+  it('Should update a group when a put request is made to /groups/:id', async () => {
 
     let response = await server.post('/signup').send(user1);
 
@@ -106,7 +100,7 @@ describe('Testing requests to /groups route', () => {
 
   });
 
-  it('Should find all groups when get request is made to /groups', async () => {
+  it('Should find all groups when a get request is made to /groups', async () => {
 
     let response = await server.post('/signup').send(user1);
 
@@ -125,7 +119,7 @@ describe('Testing requests to /groups route', () => {
   });
 
 
-  it('Should find one groups when get request is made to /groups/:id', async () => {
+  it('Should find one group when a get request is made to /groups/:id', async () => {
 
     let response = await server.post('/signup').send(user1);
 
@@ -143,7 +137,7 @@ describe('Testing requests to /groups route', () => {
 
   });
 
-  it('Should remove a group when delete request is made to /groups/:id', async () => {
+  it('Should remove a group when a delete request is made to /groups/:id', async () => {
 
     let response = await server.post('/signup').send(user1);
 
