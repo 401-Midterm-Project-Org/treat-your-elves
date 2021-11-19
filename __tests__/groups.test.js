@@ -106,39 +106,55 @@ describe('Testing requests to /groups route', () => {
 
   });
 
-  // it('Should find all groups when get request is made to /groups', async () => {
+  it('Should find all groups when get request is made to /groups', async () => {
 
-  //   let response = await server.get('/groups');
+    let response = await server.post('/signup').send(user1);
 
-  //   const groups = response.body;
+    const token = jwt.sign(user1, process.env.SECRET);
 
-  //   console.log(groups, '<-- SHOULD BE ALL GROUPS --<<')
+    response = await server
+      .get('/groups')
+      .set('Authorization', `Bearer ${token}`)
 
-  //   expect(response.status).toBe(200)
-  //   expect(groups[0].id).toBe(1)
-  //   expect(groups[0].groupName).toBe('updated name 1')
+    const groups = response.body;
 
-  // });
+    expect(response.status).toBe(200)
+    expect(groups[0].id).toBe(1)
+    expect(groups[0].groupName).toBe('updated name 1')
+
+  });
 
 
-  // it('Should find one groups when get request is made to /groups/:id', async () => {
+  it('Should find one groups when get request is made to /groups/:id', async () => {
 
-  //   let response = await server.get('/groups/1');
+    let response = await server.post('/signup').send(user1);
 
-  //   const groups = response.body;
+    const token = jwt.sign(user1, process.env.SECRET);
 
-  //   expect(response.status).toBe(200)
-  //   expect(groups.id).toBe(1)
-  //   expect(groups.groupName).toBe('updated name 1')
+    response = await server
+      .get('/groups/1')
+      .set('Authorization', `Bearer ${token}`)
 
-  // });
+    const groups = response.body;
 
-  // it('Should remove a group when delete request is made to /groups/:id', async () => {
+    expect(response.status).toBe(200)
+    expect(groups.id).toBe(1)
+    expect(groups.groupName).toBe('updated name 1')
 
-  //   let response = await server.delete('/groups/1');
+  });
 
-  //   expect(response.status).toBe(200)
+  it('Should remove a group when delete request is made to /groups/:id', async () => {
 
-  // });
+    let response = await server.post('/signup').send(user1);
+
+    const token = jwt.sign(user1, process.env.SECRET);
+
+    response = await server
+      .delete('/groups/1')
+      .set('Authorization', `Bearer ${token}`)
+
+    expect(response.status).toBe(200)
+
+  });
 
 });
