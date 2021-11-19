@@ -9,11 +9,11 @@ process.env.SECRET = 'secretstuffhere';
 
 const jwt = require('jsonwebtoken');
 
-beforeAll( async () => {
+beforeAll(async () => {
   await db.sync()
 });
 
-afterAll( async () => {
+afterAll(async () => {
   await db.drop()
 });
 
@@ -25,21 +25,25 @@ describe('Testing requests to /associations route', () => {
     password: 'password2',
   }
 
-  let groupAssociation = {
-    groupId: 1,
-    userId: 1,
-    role: 'admin',
+  let group = {
+    groupName: 'name 1',
+    groupAdminId: 1
   }
-  
+
   it('Should create a group when a post request is made to /associations', async () => {
 
-    let response = await server.post('/signup').send(user1);
+    await server.post('/signup').send(user1);
 
     const token = jwt.sign(user1, process.env.SECRET);
 
     await server
+      .post('/groups')
+      .send(group)
+      .set('Authorization', `Bearer ${token}`)
+      .set('Accept', 'application/json');
+
+    let response = await server
       .post('/associations/1/1')
-      .send(groupAssociation)
       .set('Authorization', `Bearer ${token}`)
       .set('Accept', 'application/json');
 
@@ -47,21 +51,26 @@ describe('Testing requests to /associations route', () => {
 
   });
 
-  let groupAssociation2 = {
-    groupId: 2,
-    userId: 1,
-    role: 'admin',
+  let group2 = {
+    groupName: 'name 2',
+    groupAdminId: 1
   }
 
   it('Should create multiple group when more post requests are made to /associations', async () => {
 
-    let response = await server.post('/signup').send(user1);
+   
+    await server.post('/signup').send(user1);
 
     const token = jwt.sign(user1, process.env.SECRET);
 
     await server
-      .post('/associations/1/2')
-      .send(groupAssociation2)
+      .post('/groups')
+      .send(group2)
+      .set('Authorization', `Bearer ${token}`)
+      .set('Accept', 'application/json');
+
+    let response = await server
+      .post('/associations/2/1')
       .set('Authorization', `Bearer ${token}`)
       .set('Accept', 'application/json');
 
@@ -69,80 +78,49 @@ describe('Testing requests to /associations route', () => {
 
   });
 
-  // let updatedGroup1 = {
-  //   groupName: 'updated name 1',
-  //   groupAdminId: 1
-  // }
+  it('Should find all associations when a get request is made to /associations', async () => {
 
-  // it('Should update a group when a put request is made to /associations/:id', async () => {
+    await server.post('/signup').send(user1);
 
-  //   let response = await server.post('/signup').send(user1);
+    const token = jwt.sign(user1, process.env.SECRET);
 
-  //   const token = jwt.sign(user1, process.env.SECRET);
+    let response = await server
+      .get('/associations')
+      .set('Authorization', `Bearer ${token}`)
 
-  //   response = await server
-  //     .put('/associations/1')
-  //     .send(updatedGroup1)
-  //     .set('Authorization', `Bearer ${token}`)
-  //     .set('Accept', 'application/json');
+    expect(response.status).toBe(200)
 
-  //   const groupObject = response.body;
-
-  //   expect(response.status).toBe(200)
-  //   expect(groupObject.id).toBe(1)
-  //   expect(groupObject.groupName).toBe('updated name 1')
-
-  // });
-
-  // it('Should find all groups when a get request is made to /associations', async () => {
-
-  //   let response = await server.post('/signup').send(user1);
-
-  //   const token = jwt.sign(user1, process.env.SECRET);
-
-  //   response = await server
-  //     .get('/associations')
-  //     .set('Authorization', `Bearer ${token}`)
-
-  //   const groups = response.body;
-
-  //   expect(response.status).toBe(200)
-  //   expect(groups[0].id).toBe(1)
-  //   expect(groups[0].groupName).toBe('updated name 1')
-
-  // });
+  });
 
 
-  // it('Should find one group when a get request is made to /associations/:id', async () => {
+  it('Should find one group when a get request is made to /associations/:id', async () => {
 
-  //   let response = await server.post('/signup').send(user1);
+    await server.post('/signup').send(user1);
 
-  //   const token = jwt.sign(user1, process.env.SECRET);
+    const token = jwt.sign(user1, process.env.SECRET);
 
-  //   response = await server
-  //     .get('/associations/1')
-  //     .set('Authorization', `Bearer ${token}`)
+    let response = await server
+      .get('/associations/1')
+      .set('Authorization', `Bearer ${token}`)
 
-  //   const groups = response.body;
+    expect(response.status).toBe(200)
 
-  //   expect(response.status).toBe(200)
-  //   expect(groups.id).toBe(1)
-  //   expect(groups.groupName).toBe('updated name 1')
+  });
 
-  // });
+  it('Should remove a group when a delete request is made to /associations/:id', async () => {
 
-  // it('Should remove a group when a delete request is made to /associations/:id', async () => {
+    await server.post('/signup').send(user1);
 
-  //   let response = await server.post('/signup').send(user1);
+    const token = jwt.sign(user1, process.env.SECRET);
 
-  //   const token = jwt.sign(user1, process.env.SECRET);
+    let response = await server
+      .delete('/associations/1/1')
+      .set('Authorization', `Bearer ${token}`)
 
-  //   response = await server
-  //     .delete('/associations/1/1')
-  //     .set('Authorization', `Bearer ${token}`)
+      console.log(response.body, '<-- RESPONSE DOT BODY --<<')
 
-  //   expect(response.status).toBe(200)
+    expect(response.status).toBe(200)
 
-  // });
+  });
 
 });
