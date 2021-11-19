@@ -5,7 +5,6 @@ const { db, users } = require('../src/models/index.js');
 const supertest = require("supertest");
 const { server } = require("../src/server.js");
 const mockRequest = supertest(server);
-const base64 = require("base-64");
 
 let user = {
   admin: { username: 'test', password: 'test', name: 'test' },
