@@ -1,10 +1,5 @@
 'use strict';
 
-/* 
-- [] Middleware to find user creating the group
-- [] Create "admin" groupAssociation with group & creator upon group creation
-*/
-
 const express = require('express');
 
 const groupRouter = express.Router();
@@ -14,7 +9,6 @@ const { groups, associations, santaPairs } = require('../models/index.js');
 const bearerAuth = require('../middleware/bearer');
 const permissions = require('../middleware/acl.js');
 
-// post, put, and delete for admin management of a group itself
 groupRouter.post('/groups', bearerAuth, handleGroupCreate);
 groupRouter.put('/groups/:id', bearerAuth, permissions('updateGroup'), handleGroupUpdate);
 groupRouter.delete('/groups/:id', bearerAuth, permissions('deleteGroup'), handleDeleteGroup);
@@ -23,7 +17,6 @@ groupRouter.get('/groups/:id', bearerAuth, handleGetOneGroup);
 
 async function handleGroupCreate(request, response, next) {
 
-  // use model while restricting routes?
   try {
     let groupRecord = await groups.create(request.body);
     let groupAssociation = await associations.create({groupId: groupRecord.id, userId: groupRecord.groupAdminId, role: 'admin'})

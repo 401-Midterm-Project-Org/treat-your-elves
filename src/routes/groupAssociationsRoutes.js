@@ -16,7 +16,6 @@ associationsRouter.get('/groupmembers/:groupid', bearerAuth, handleGetGroupAssoc
 
 async function handleAssociationCreate(request, response, next) {
 
-  // use model while restricting routes?
   try {
     let id = request.params.id;
     let userId = request.params.userid;
@@ -35,12 +34,7 @@ async function handleAssociationCreate(request, response, next) {
 
 };
 
-
-// TO DO: Test with user
-
 async function handleDeleteAssociation(req, res, next) {
-
-  // maybe revisit to add logic (perhaps middleware), so admins cannot be deleted this way.
 
   try{
     const group = req.params.id;

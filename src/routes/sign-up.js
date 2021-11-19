@@ -5,7 +5,6 @@ const express = require('express');
 const authRouter = express.Router();
 
 const { users } = require('../models/index.js');
-// const { groups } = require('../models/Groups.js');
 
 authRouter.post('/signup', async (request, response, next) => {
 
