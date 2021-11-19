@@ -5,12 +5,12 @@ const { db, users } = require('../src/models/index.js');
 const supertest = require("supertest");
 const { server } = require("../src/server.js");
 const mockRequest = supertest(server);
+const base64 = require("base-64");
 
 let user = {
   admin: { username: 'test', password: 'test', name: 'test' },
 };
 
-// Pre-load our database with fake users
 beforeAll(async () => {
   await db.sync();
   await users.create(user.admin);
@@ -22,14 +22,13 @@ afterAll(async () => {
 
 describe('Basic Auth Middleware', () => {
 
-  const req = {};
-  const res = {
-    status: jest.fn(() => res),
-    send: jest.fn(() => res)
-  }
-  const next = jest.fn();
-
   it('Fails to login user with the incorrect credentials', () => {
+    const req = {};
+    const res = {
+      status: jest.fn(() => res),
+      send: jest.fn(() => res)
+    }
+    const next = jest.fn();
 
     req.headers = {
       authorization: 'Basic YWRtaW46Zm9v',
