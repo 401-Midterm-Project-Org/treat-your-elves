@@ -10,6 +10,7 @@ process.env.SECRET = 'secretstuffhere';
 const jwt = require('jsonwebtoken');
 
 beforeAll(async () => {
+  await db.drop()
   await db.sync()
 });
 
