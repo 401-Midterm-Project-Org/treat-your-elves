@@ -23,15 +23,7 @@ const userModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    
-    /*
-    token: {
-      type: DataTypes.VIRTUAL,
-      get() {
-        return jwt.sign({ username: this.username }, SECRET)
-      }
-    },
-    */
+
   });
 
   // model.beforeCreate(async (user) => {
@@ -70,7 +62,5 @@ const userModel = (sequelize, DataTypes) => {
 
   return model;
 }
-
-
 
 module.exports = userModel;
