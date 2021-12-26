@@ -10,7 +10,7 @@ const app = express();
 const groupRoutes = require('./routes/groupRoutes.js');
 const associationsRoutes = require('./routes/groupAssociationsRoutes');
 const listRoutes = require('./routes/listRoutes.js');
-const santaRoutes = require('./routes/santaRoutes')
+const santaRoutes = require('./routes/santaRoutes');
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -23,7 +23,6 @@ app.use(signIn);
 app.use(associationsRoutes);
 app.use(listRoutes);
 app.use(santaRoutes);
-
 app.use(groupRoutes);
 
 module.exports = {
