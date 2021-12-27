@@ -8,10 +8,10 @@ const permissions = require('../middleware/acl.js');
 const associationsRouter = express.Router();
 
 // post, put, and delete for both admin and users for wishlists
-associationsRouter.post('/associations/:id/:userid', bearerAuth, permissions('createGroupMember'),handleAssociationCreate);
+associationsRouter.post('/associations/:id/:userid', permissions('createGroupMember'),handleAssociationCreate);
 associationsRouter.delete('/associations/:id/:userid', bearerAuth, permissions('deleteGroupMember'), handleDeleteAssociation);
-associationsRouter.get('/associations', bearerAuth, handleGetAllAssociations);
-associationsRouter.get('/associations/:id', bearerAuth, handleGetOneAssociation);
+associationsRouter.get('/associations', handleGetAllAssociations);
+associationsRouter.get('/associations/:id', handleGetOneAssociation);
 associationsRouter.get('/groupmembers/:groupid', bearerAuth, handleGetGroupAssociations);
 
 async function handleAssociationCreate(request, response, next) {
@@ -63,7 +63,7 @@ async function handleGetOneAssociation(req, res, next) {
 
   try {
     let id = req.params.id;
-    let groupUser = await associations.findAll({where: { id }});
+    let groupUser = await associations.findAll({where: { userId: id }});
     res.status(200).json(groupUser);
   } catch (error) {
     res.status(400).send(error);

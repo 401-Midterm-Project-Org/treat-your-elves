@@ -9,10 +9,10 @@ const { groups, associations, santaPairs } = require('../models/index.js');
 const bearerAuth = require('../middleware/bearer');
 const permissions = require('../middleware/acl.js');
 
-groupRouter.post('/groups', bearerAuth, handleGroupCreate);
+groupRouter.post('/groups', handleGroupCreate);
 groupRouter.put('/groups/:id', bearerAuth, permissions('updateGroup'), handleGroupUpdate);
 groupRouter.delete('/groups/:id', bearerAuth, permissions('deleteGroup'), handleDeleteGroup);
-groupRouter.get('/groups', bearerAuth, handleGetAllGroups);
+groupRouter.get('/groups', handleGetAllGroups);
 groupRouter.get('/groups/:id', bearerAuth, handleGetOneGroup);
 
 async function handleGroupCreate(request, response, next) {
@@ -20,6 +20,7 @@ async function handleGroupCreate(request, response, next) {
   try {
     let groupRecord = await groups.create(request.body);
     let groupAssociation = await associations.create({groupId: groupRecord.id, userId: groupRecord.groupAdminId, role: 'admin'})
+    console.log('association: ',groupAssociation);
 
     const output = {
       group: groupRecord,
