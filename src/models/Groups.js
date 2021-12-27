@@ -10,7 +10,7 @@ const groupModel = (sequelize, DataTypes) => {
     },
 
     groupAdminId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     }
   })

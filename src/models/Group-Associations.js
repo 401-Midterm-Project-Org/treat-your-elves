@@ -9,7 +9,7 @@ const userGroupAssociationsModel = (sequelize, DataTypes) => {
     },
 
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     },
 
