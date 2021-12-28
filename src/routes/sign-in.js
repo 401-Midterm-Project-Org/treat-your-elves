@@ -4,23 +4,16 @@ const express = require('express');
 
 const authRouter = express.Router();
 
-const { users } = require('../models/index.js');
-// const basicAuth = require('../middleware/basic.js');
+const basicAuth = require('../middleware/basic.js');
 
-authRouter.post('/signin', async (request, response, next) => {
-  const email = request.body.email.toLowerCase();
+authRouter.post('/signin', basicAuth, async (request, response, next) => {
 
   try {
-    let user = await users.findOne({ where: { email } });
 
-    // instead of throwing error, create a new user
-    if (!user) {
-      // create new user
-      user = await users.create(request.body);
-    }
-
-    console.log(user);
-    // console.log(request.body);
+    const user = {
+      user: request.user,
+      token: request.user.token,
+    };
 
     response.status(200);
     response.send(user);
