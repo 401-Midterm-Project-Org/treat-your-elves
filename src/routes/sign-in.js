@@ -26,4 +26,17 @@ authRouter.post('/signin', async (request, response, next) => {
   }
 })
 
+authRouter.get('/signin/:email', getUser);
+
+async function getUser(request, response, next){
+
+  try{
+    const email = request.params.email;
+    const user = await users.findOne({where: {email} });
+    response.status(200).json(user);
+  }catch (error) {
+    response.status(400).send('no user found', error);
+  }
+}
+
 module.exports = authRouter;

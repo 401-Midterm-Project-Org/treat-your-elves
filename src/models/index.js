@@ -29,11 +29,11 @@ const associations = userGroupAssociationsModel(sequelize, DataTypes);
 const listItem = listItemModel(sequelize, DataTypes);
 const santaPairs = santaPairModel(sequelize, DataTypes);
 
-// users.hasMany(groups, { foreignKey: 'groupAdminId', sourceKey: 'id' });
-// groups.belongsTo(users, { foreignKey: 'groupAdminId', targetKey: 'id' });
+users.hasMany(groups, { foreignKey: 'groupAdminId', sourceKey: 'id' });
+groups.belongsTo(users, { foreignKey: 'groupAdminId', targetKey: 'id' });
 
-// users.hasMany(associations, { foreignKey: 'userId', sourceKey: 'id' });
-// associations.belongsTo(users, { foreignKey: 'userId', targetKey: 'id' })
+users.hasMany(associations, { foreignKey: 'userId', sourceKey: 'id' });
+associations.belongsTo(users, { foreignKey: 'userId', targetKey: 'id' })
 
 groups.hasMany(associations, { foreignKey: 'groupId', sourceKey: 'id' });
 associations.belongsTo(groups, { foreignKey: 'groupId', targetKey: 'id' })
