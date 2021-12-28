@@ -8,7 +8,7 @@ const permissions = require('../middleware/acl.js');
 const associationsRouter = express.Router();
 
 // post, put, and delete for both admin and users for wishlists
-associationsRouter.post('/associations/:id/:userid', handleAssociationCreate);
+associationsRouter.post('/associations/:id/:userid', permissions('createGroupMember'),handleAssociationCreate);
 associationsRouter.delete('/associations/:id/:userid', bearerAuth, permissions('deleteGroupMember'), handleDeleteAssociation);
 associationsRouter.get('/associations', handleGetAllAssociations);
 associationsRouter.get('/associations/:id', handleGetOneAssociation);
@@ -19,7 +19,9 @@ async function handleAssociationCreate(request, response, next) {
   try {
     let id = request.params.id;
     let userId = request.params.userid;
-    let groupAssociation = await associations.create({groupId: group.id, userId: userId})
+    let group = await groups.findOne({where: { id }});
+    let user = await users.findOne({where: { id : userId }})
+    let groupAssociation = await associations.create({groupId: group.id, userId: user.id})
 
     const output = {
       groupAssociation
@@ -80,5 +82,6 @@ async function handleGetGroupAssociations(req, res, next) {
   }
 
 };
+
 
 module.exports = associationsRouter;
