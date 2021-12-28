@@ -23,6 +23,11 @@ const userModel = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+
+    email: {
+      type:DataTypes.STRING,
+      allowNull: false
+    },
     
     token: {
       type: DataTypes.VIRTUAL,
@@ -55,7 +60,5 @@ const userModel = (sequelize, DataTypes) => {
 
   return model;
 }
-
-
 
 module.exports = userModel;
