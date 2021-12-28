@@ -13,6 +13,7 @@ const associationsRoutes = require('./routes/groupAssociationsRoutes');
 const listRoutes = require('./routes/listRoutes.js');
 const santaRoutes = require('./routes/santaRoutes');
 const userRoutes = require('./routes/userRoutes');
+const mailingRoutes = require('./routes/mailingRoute')
 
 app.use(cors());
 app.use(morgan('dev'));
@@ -28,6 +29,8 @@ app.use(listRoutes);
 app.use(santaRoutes);
 app.use(userRoutes);
 app.use(groupRoutes);
+
+app.use(mailingRoutes);
 
 module.exports = {
   server: app,
