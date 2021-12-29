@@ -8,8 +8,8 @@ const permissions = require('../middleware/acl.js');
 const associationsRouter = express.Router();
 
 // post, put, and delete for both admin and users for wishlists
-associationsRouter.post('/associations/:groupid/:username', bearerAuth, permissions('createGroupMember'),handleAssociationCreate);
-associationsRouter.delete('/associations/:groupid/:userid', bearerAuth, permissions('deleteGroupMember'), handleDeleteAssociation);
+associationsRouter.post('/associations/:id/:userid', bearerAuth, permissions('createGroupMember'),handleAssociationCreate);
+associationsRouter.delete('/associations/:id/:userid', bearerAuth, permissions('deleteGroupMember'), handleDeleteAssociation);
 associationsRouter.get('/associations', bearerAuth, handleGetAllAssociations);
 associationsRouter.get('/associations/:id', bearerAuth, handleGetOneAssociation);
 associationsRouter.get('/groupmembers/:groupid', bearerAuth, handleGetGroupAssociations);
@@ -17,8 +17,8 @@ associationsRouter.get('/groupmembers/:groupid', bearerAuth, handleGetGroupAssoc
 async function handleAssociationCreate(request, response, next) {
 
   try {
-    let id = request.params.groupid;
-    let username = request.params.username;
+    let id = request.params.id;
+    let username = request.params.userid;
     let group = await groups.findOne({where: { id }});
     let user = await users.findOne({where: { username }})
     let groupAssociation = await associations.create({groupId: group.id, userId: user.id})
@@ -37,7 +37,7 @@ async function handleAssociationCreate(request, response, next) {
 async function handleDeleteAssociation(req, res, next) {
 
   try{
-    const group = req.params.groupid;
+    const group = req.params.id;
     const id = req.params.userid;
     await associations.destroy({ where: { groupId: group, userId: id } });
     res.status(200).send('deleted!');
